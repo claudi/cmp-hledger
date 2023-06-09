@@ -34,7 +34,10 @@ local split = function(str, sep)
 end
 
 local get_items = function(account_path)
-  local openPop = assert(io.popen(vim.b.hledger_bin .. ' accounts -f ' .. account_path .. ' -f ' .. os.getenv("LEDGER_FILE")))
+  local ledgerFile = os.getenv('LEDGER_FILE')
+  local ledgerFileInclude = ''
+  if ledgerFile then ledgerFileInclude = ' -f ' .. tostring(ledgerFile) end
+  local openPop = assert(io.popen(vim.b.hledger_bin .. ' accounts -f ' .. account_path .. ledgerFileInclude))
   local output = openPop:read('*all')
   openPop:close()
   local t = split(output, "\n")
