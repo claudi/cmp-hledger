@@ -37,8 +37,8 @@ end
 local get_accounts = function(account_path)
   local ledgerFile = os.getenv('LEDGER_FILE')
   local ledgerFileInclude = ''
-  if ledgerFile then ledgerFileInclude = ' -f ' .. tostring(ledgerFile) end
-  local openPop = assert(io.popen(vim.b.hledger_bin .. ' accounts -f ' .. account_path .. ledgerFileInclude))
+  if ledgerFile then ledgerFileInclude = ' --file ' .. tostring(ledgerFile) end
+  local openPop = assert(io.popen(vim.b.hledger_bin .. ' accounts --file ' .. account_path .. ledgerFileInclude))
   local output = openPop:read('*all')
   openPop:close()
   local t = split(output, "\n")
@@ -57,8 +57,8 @@ end
 local get_descriptions = function(account_path)
   local ledgerFile = os.getenv('LEDGER_FILE')
   local ledgerFileInclude = ''
-  if ledgerFile then ledgerFileInclude = ' -f ' .. tostring(ledgerFile) end
-  local openPop = assert(io.popen(vim.b.hledger_bin .. ' descriptions -f ' .. account_path .. ledgerFileInclude))
+  if ledgerFile then ledgerFileInclude = ' --file ' .. tostring(ledgerFile) end
+  local openPop = assert(io.popen(vim.b.hledger_bin .. ' descriptions --file ' .. account_path .. ledgerFileInclude))
   local output = openPop:read('*all')
   openPop:close()
   local t = split(output, "\n")
@@ -80,7 +80,7 @@ source.complete = function(self, request, callback)
     return
   end
   if vim.fn.executable("hledger") == 1 then
-    vim.b.hledger_bin = "hledger -I"
+    vim.b.hledger_bin = "hledger --ignore-assertions"
   elseif vim.fn.executable("ledger") == 1 then
     vim.b.hledger_bin = "ledger"
   else
