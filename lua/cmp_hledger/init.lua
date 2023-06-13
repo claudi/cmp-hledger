@@ -80,7 +80,7 @@ source.complete = function(self, request, callback)
     return
   end
   if vim.fn.executable("hledger") == 1 then
-    vim.b.hledger_bin = "hledger"
+    vim.b.hledger_bin = "hledger -I"
   elseif vim.fn.executable("ledger") == 1 then
     vim.b.hledger_bin = "ledger"
   else
